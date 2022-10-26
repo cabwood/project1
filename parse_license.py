@@ -1,3 +1,7 @@
+import re
+
+RE_WORD = re.compile(r"[a-zA-Z-]+")
+
 find_words = [
     "copyright",
     "the",
@@ -13,7 +17,7 @@ copyright_count = 0
 
 def parse(ln):
     global copyright_count
-    words = ln.split()
+    words = RE_WORD.findall(ln)
     for word in words:
         try:
             num = int(word)
@@ -23,7 +27,7 @@ def parse(ln):
             print(" There was a number: ", num)
         lword = word.lower()
         for search_word in find_words:
-            if search_word in lword:
+            if search_word == lword:
                 word_counts[search_word] += 1
 
 f = open("LICENSE", "r")
